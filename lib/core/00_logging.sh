@@ -3,7 +3,7 @@
 # script for creating logs
 #
 
-info() {
+inform() {
     local message="$1"
     echo -e "[INFO] $message\n" >> "$current_info_log_path"
     return 0
