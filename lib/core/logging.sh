@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+# script for creating logs
+#
+
+info() {
+    local message="$1"
+    echo "[INFO] $message" >> "$current_info_log_path"
+    return 0
+}
+
+error() {
+    local message="$1"
+    echo "[ERROR] $message" >> "$current_err_log_path"
+    return 0
+}
+
+create_dir(){
+    mkdir -p "$1" || {
+        echo "failed to create directory: $1"
+        return 1
+    }
+}
