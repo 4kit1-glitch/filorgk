@@ -16,8 +16,8 @@ error() {
 }
 
 create_dir(){
-    mkdir -p "$1" || {
-        echo "failed to create directory: $1"
+    mkdir -p "$@" || {
+        echo "failed to create directory: $*" 2> /dev/null
         return 1
     }
 }
