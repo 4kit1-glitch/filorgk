@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# shellcheck source=/dev/null
+#
+# A light wieght multipurpose file organiser built in bash
+# 
+#
+
+readonly VERSION=0.0.1
+readonly PROG_NAME=$(basename "$0")
+
+export SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+export LOGS_DIR=${LOGS_DIR:-"$HOME/.local/state/$PROG_NAME/logs"}
+export BACKUP_DIR=${BACKUP_DIR:-"$HOME/.local/share/$PROG_NAME/"}
+
+export DATE="$(date +%Y_%m_%d)"
+
