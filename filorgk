@@ -10,20 +10,23 @@ set -euo pipefail
 readonly VERSION=0.0.1
 readonly PROG_NAME=$(basename "$0")
 
-
+#shellcheck disable=2155
 export DATE="$(date +%Y_%m_%d)"
+#shellcheck disable=2155
 export SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)
+
 export LOGS_DIR=${LOGS_DIR:-"$HOME/.local/state/$PROG_NAME/logs"}
-export BACKUP_DIR=${BACKUP_DIR:-"$HOME/.local/share/$PROG_NAME/"}
+export BACKUP_DIR=${BACKUP_DIR:-"$HOME/.local/share/$PROG_NAME/backup"}
 
 export core_dir="$SCRIPT_DIR/lib/core"
 export function_dir="$SCRIPT_DIR/lib/functions"
 
-
+# source core scripts
+for script in "$core_dir"/*; do
+    source "$script"
+done
 
 
 main() {
     printf "Enter the directory to organise (ENTER /bye to quit): "
 }
-
-main
