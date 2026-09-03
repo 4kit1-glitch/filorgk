@@ -31,4 +31,17 @@ done
 
 main() {
     printf "Enter the directory to organise (ENTER /bye to quit): "
+
+    create_dir "$LOGS_DIR" "$BACKUP_DIR" || {
+        echo "Failed to create logs or backup directory" >&2
+        error "Failed to create logs or backup directory"
+        exit 1
+    }
+
+    find_files || {
+        echo "Failed to find files" >&2
+        error "failed to find files"
+        exit 1
+    }
 }
+main
