@@ -17,7 +17,15 @@ get_files() {
         printf "%s\n" "$file"
     done
 }
-
+get_extension() {
+    local file_path="$1"
+    local extension
+    extension=${file_path##*.}
+    [[ $extension == "$file_path" ]] && {
+        extension="none"
+    }
+    printf "%s" "$extension"
+}
 store_files() {
     local -a files
     directory="$(find_all_matches)"
@@ -29,18 +37,7 @@ store_files() {
     }
     for file in "${files[@]}"; do
         printf "%s\n" "$file"
-        echo extension: "$(get_extension "$file")"
     done
-}
-
-get_extension() {
-    local file_path="$1"
-    local extension
-    extension=${file_path##*.}
-    [[ $extension == "$file_path" ]] && {
-        extension="none"
-    }
-    printf "%s" "$extension"
 }
 
 get_file_count() {
