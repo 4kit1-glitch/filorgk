@@ -27,6 +27,15 @@ get_extension() {
     printf "%s" "$extension"
 }
 
+get_mtime() {
+    local file_path="$1"
+    stat -c %y "$file_path" 2> /dev/null | awk  '{print $1}' || {
+        printf "Failed to get mtime" >&2
+        error "Failed to get mtime"
+        exit 0
+    }
+}
+
 store_files() {
     local -a files
     directory="$(find_all_matches)"
@@ -39,13 +48,4 @@ store_files() {
     for file in "${files[@]}"; do
         printf "%s\n" "$file"
     done
-}
-
-get_mtime() {
-    local file_path="$1"
-    stat -c %y "$file_path" 2> /dev/null | awk  '{print $1}' || {
-        printf "Failed to get mtime" >&2
-        error "Failed to get mtime"
-        exit 0
-    }
 }
