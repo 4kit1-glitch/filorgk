@@ -22,16 +22,25 @@ export function_dir="$SCRIPT_DIR/lib/functions"
 
 export current_err_log_path="$LOGS_DIR/err_$DATE.log"
 export current_info_log_path="$LOGS_DIR/info_$DATE.log"
+export run_count_path="$LOGS_DIR/run_count.log"
+
 
 # source core scripts
 for script in "$core_dir"/*; do
     source "$script"
 done
 
-
+increment_run_count() {
+    if [[ ! -f "$run_count_path" ]]; then
+        echo 0 > "$run_count_path"
+    fi
+    local run_count
+    run_count=$(<"$run_count_path")
+    run_count=$((run_count + 1))
+    echo "$run_count" > "$run_count_path"
+}
 main() {
-    printf "Enter the directory to organise (ENTER /bye to quit): "
-
+    
     create_dir "$LOGS_DIR" "$BACKUP_DIR" || {
         echo "Failed to create logs or backup directory" >&2
         error "Failed to create logs or backup directory"
