@@ -30,8 +30,8 @@ get_sub_option() {
     local main_option="$1"
     case "$main_option" in
         "delete")
-            local -a sub_options=("delete_empty_files" "delete_duplicates" 
-                "delete_large_files" "delete_old_files" "delete_by_extension")
+            local -a sub_options=("delete_empty_files" "delete_large_files" 
+            "delete_old_files" "delete_by_extension")
             ;;
         "move")
             local -a sub_options=("move_by_extension" "move_by_size" "move_by_date")
