@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # shellcheck source=/dev/null
-# shellcheck disable=2155
+# shellcheck disable=2155,2154
 # file handler script
 
 get_files() {
@@ -36,7 +36,7 @@ get_mtime() {
     }
 }
 
-store_files() {
+find_files() {
     local -a files
     directory="$(find_all_matches)"
     mapfile -t files < <( get_files "$directory" )
@@ -46,6 +46,19 @@ store_files() {
         exit 0
     }
     for file in "${files[@]}"; do
-        printf "%s\n" "$file"
+        printf "%s\n" "$file" >> "$found_files_store_path" || {
+            printf "Failed to write to found files store path" >&2
+            error "Failed to write to found files store path"
+            exit 1
+        }
+    done
+}
+display_found_files() {
+    local count=0
+    clear
+    printf "found files..\n"
+    cat "$found_files_store_path" | while IFS= read -r file; do
+        count=$((count + 1))
+        printf "%d. %s\n" "$count" "$file"
     done
 }
