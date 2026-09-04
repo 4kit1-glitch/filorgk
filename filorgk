@@ -46,6 +46,11 @@ main() {
         error "Failed to create logs or backup directory"
         exit 1
     }
+    increment_run_count || {
+        echo "Failed to increment run count" >&2
+        error "Failed to increment run count"
+        exit 1
+    }
 
     find_files || {
         echo "Failed to find files" >&2
