@@ -36,6 +36,15 @@ get_mtime() {
     }
 }
 
+get_size() {
+    local file_path="$1"
+    find "$file_path" -type f -printf "%s" 2> /dev/null || {
+        printf "Failed to get size" >&2
+        error "Failed to get size"
+        exit 0
+    }
+}
+
 find_files() {
     local -a files
     directory="$(find_all_matches)"
