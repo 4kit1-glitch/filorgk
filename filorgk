@@ -25,20 +25,25 @@ export current_info_log_path="$LOGS_DIR/info_$DATE.log"
 export run_count_path="$LOGS_DIR/run_count.log"
 
 
+
 # source core scripts
 for script in "$core_dir"/*; do
     source "$script"
 done
 
 increment_run_count() {
+    local run_count
     if [[ ! -f "$run_count_path" ]]; then
         echo 0 > "$run_count_path"
     fi
-    local run_count
     run_count=$(<"$run_count_path")
     run_count=$((run_count + 1))
     echo "$run_count" > "$run_count_path"
 }
+
+run_count=$(cat "$run_count_path")
+export found_files_store_path="$LOGS_DIR/found_files_$run_count.log"
+
 main() {
     
     create_dir "$LOGS_DIR" "$BACKUP_DIR" || {
@@ -51,11 +56,17 @@ main() {
         error "Failed to increment run count"
         exit 1
     }
-
+    printf "Enter the directory to organise: "
     find_files || {
         echo "Failed to find files" >&2
-        error "failed to find files"
+        error "Failed to find files"
         exit 1
     }
+    display_found_files || {
+        echo "Failed to display found files" >&2
+        error "Failed to display found files"
+        exit 1
+    }
+
 }
 main
