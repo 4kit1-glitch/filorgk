@@ -34,7 +34,7 @@ get_sub_option() {
             "delete_old_files" "delete_by_extension")
             ;;
         "move")
-            local -a sub_options=("move_by_extension" "move_by_size" "move_by_date")
+            local -a sub_options=("move_by_extension" "move_by_date")
         ;;
         "auto-arrange")
             local -a sub_options=("auto_arrange_by_extension" "auto_arrange_by_size" "auto_arrange_by_mtime")
@@ -50,4 +50,53 @@ get_sub_option() {
         error "Failed to get sub option for main option: $main_option"
         exit 1
     }
+}
+
+execute_operation() {
+    local option="$1"
+    case "$main_option" in
+        "delete")
+            case "$sub_option" in
+                "delete_empty_files")
+                    delete_empty_files
+                ;;
+                "delete_large_files")
+                    delete_large_files
+                ;;
+                "delete_old_files")
+                    delete_old_files
+                ;;
+                "delete_by_extension")
+                    delete_by_extension
+                ;;
+            esac
+        ;;
+        "move")
+            case "$sub_option" in
+                "move_by_extension")
+                    move_by_extension
+                ;;
+                "move_by_size")
+                    move_by_size
+                ;;
+                "move_by_date")
+                    move_by_date
+                ;;
+            esac
+        ;;
+        "auto-arrange")
+            case "$sub_option" in
+                "auto_arrange_by_extension")
+                    auto_arrange_by_extension
+                ;;
+                "auto_arrange_by_size")
+                    auto_arrange_by_size
+                ;;
+                "auto_arrange_by_mtime")
+                    auto_arrange_by_mtime
+                ;;
+            esac
+        ;;
+    esac
+
 }
