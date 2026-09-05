@@ -4,7 +4,12 @@
 # execute function script
 
 reset_logs_and_runstate() {
-    rm -rf "$LOGS_DIR" && rm -rf "$BACKUP_DIR" || {
+    rm -rf "$LOGS_DIR"  || {
+        echo "Failed to reset logs and run state" >&2
+        error "Failed to reset logs and run state"
+        exit 1
+    }
+    rm -rf "$BACKUP_DIR" || {
         echo "Failed to reset logs and run state" >&2
         error "Failed to reset logs and run state"
         exit 1
