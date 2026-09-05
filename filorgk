@@ -45,6 +45,13 @@ run_count=$(cat "$run_count_path")
 export found_files_store_path="$LOGS_DIR/found_files_$run_count.log"
 
 main() {
+
+    parse_flags "$@" || {
+        echo "Failed to parse flags" >&2
+        error "Failed to parse flags"
+        exit 1
+    }
+
     local option
     create_dir "$LOGS_DIR" "$BACKUP_DIR" || {
         echo "Failed to create logs or backup directory" >&2
@@ -84,4 +91,7 @@ main() {
 
     return 0
 }
-main
+main "@" || {
+    printf "An error occurred during execution. Check the log files for details.\n"
+    exit 1
+}
