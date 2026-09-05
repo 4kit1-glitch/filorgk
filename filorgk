@@ -45,7 +45,7 @@ run_count=$(cat "$run_count_path")
 export found_files_store_path="$LOGS_DIR/found_files_$run_count.log"
 
 main() {
-    
+    local option
     create_dir "$LOGS_DIR" "$BACKUP_DIR" || {
         echo "Failed to create logs or backup directory" >&2
         error "Failed to create logs or backup directory"
@@ -68,5 +68,20 @@ main() {
         exit 1
     }
 
+    option=$(get_sub_option "$(get_main_option)") || {
+        echo "Failed to get sub option" >&2
+        error "Failed to get sub option"
+        exit 1
+    }
+
+    execute_sub_option "$option" || {
+        echo "Failed to execute sub option: $option" >&2
+        error "Failed to execute sub option: $option"
+        exit 1
+    }
+
+    printf "Operation completed successfully\n"
+
+    return 0
 }
 main
