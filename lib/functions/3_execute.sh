@@ -3,6 +3,14 @@
 # shellcheck disable=2154
 # execute function script
 
+reset_logs_and_runstate() {
+    rm -rf "$LOGS_DIR" && rm -rf "$BACKUP_DIR" || {
+        echo "Failed to reset logs and run state" >&2
+        error "Failed to reset logs and run state"
+        exit 1
+    }
+    exit 0
+}
 
 run_precaution() {
     read -r answer
