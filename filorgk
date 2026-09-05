@@ -6,7 +6,7 @@
 #
 
 set -euo pipefail
-
+#shellcheck disable=SC2034
 readonly VERSION=0.0.1
 readonly PROG_NAME=$(basename "$0")
 
@@ -28,6 +28,11 @@ export run_count_path="$LOGS_DIR/run_count.log"
 
 # source core scripts
 for script in "$core_dir"/*; do
+    source "$script"
+done
+
+#source function scripts
+for script in "$function_dir"/*; do
     source "$script"
 done
 
@@ -91,7 +96,7 @@ main() {
 
     return 0
 }
-main "@" || {
+main "$@" || {
     printf "An error occurred during execution. Check the log files for details.\n"
     exit 1
 }
