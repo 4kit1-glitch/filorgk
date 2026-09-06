@@ -7,7 +7,7 @@
 
 set -euo pipefail
 #shellcheck disable=SC2034
-readonly VERSION=0.0.1
+readonly VERSION=0.1.1
 readonly PROG_NAME=$(basename "$0")
 
 
