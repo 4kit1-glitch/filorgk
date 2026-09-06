@@ -74,6 +74,7 @@ main() {
         error "Failed to find files"
         exit 1
     }
+    
     display_found_files || {
         echo "Failed to display found files" >&2
         error "Failed to display found files"

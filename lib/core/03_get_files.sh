@@ -8,9 +8,9 @@ get_files() {
     local -a files=()
     mapfile -t files < <(find "$directory" -mindepth 1 -maxdepth 1  -type f 2> /dev/null)
     [[ ${#files[@]} -eq 0 ]] && {
-        printf "No file found in %s" "$directory"
-        info "No file found in $directory"
-        exit 0
+        printf "No file found in %s" "$directory" >&2
+        inform "No file found in $directory"
+        exit 1
     }
 
     for file in "${files[@]}"; do
@@ -46,12 +46,14 @@ get_size() {
 }
 
 find_files() {
-    local -a files
+    local -a files=()
     directory="$(find_all_matches)"
-    mapfile -t files < <( get_files "$directory" )
+    
+    mapfile -t files < <( get_files "$directory")
+
     [[ ${#files[@]} -eq 0 ]] && {
         printf "No file found in %s" "$directory"
-        info "No file found in $directory"
+        inform "No file found in $directory"
         exit 0
     }
     for file in "${files[@]}"; do
@@ -67,8 +69,10 @@ display_found_files() {
     local count=0
     clear
     printf "found files..\n"
+    printf "\n************************************************\n\n"
     cat "$found_files_store_path" | while IFS= read -r file; do
         count=$((count + 1))
         printf "%d. %s\n" "$count" "$file"
     done
+    printf "\n************************************************\n\n"
 }
