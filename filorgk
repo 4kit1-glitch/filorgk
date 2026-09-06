@@ -68,7 +68,7 @@ main() {
         error "Failed to increment run count"
         exit 1
     }
-    printf "Enter the directory to organise: "
+    printf "Enter the directory to organise[/bye to exit]: "
     find_files || {
         echo "Failed to find files" >&2
         error "Failed to find files"
