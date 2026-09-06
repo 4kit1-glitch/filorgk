@@ -19,7 +19,7 @@ reset_logs_and_runstate() {
 
 run_precaution() {
     read -r answer
-    [[ "$answer" != "[Y][y]" ]] && {
+    [[ "$answer" != "[Yy]" ]] && {
         echo "Operation cancelled by user" >&2
         exit 1
     }

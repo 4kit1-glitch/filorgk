@@ -7,7 +7,7 @@
 
 set -euo pipefail
 #shellcheck disable=SC2034
-readonly VERSION=0.0.1
+readonly VERSION=0.1.1
 readonly PROG_NAME=$(basename "$0")
 
 
@@ -68,12 +68,13 @@ main() {
         error "Failed to increment run count"
         exit 1
     }
-    printf "Enter the directory to organise: "
+    printf "Enter the directory to organise[/bye to exit]: "
     find_files || {
         echo "Failed to find files" >&2
         error "Failed to find files"
         exit 1
     }
+    
     display_found_files || {
         echo "Failed to display found files" >&2
         error "Failed to display found files"

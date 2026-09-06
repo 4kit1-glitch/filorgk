@@ -22,7 +22,7 @@ read_directory() {
 
 select_directory() {
     local -a matches=("$@")
-    local PS3="Please select a directory (or type 0 to cancel): "
+    local PS3="Please select a directory (type 0 to cancel): "
     select dir in "${matches[@]}"; do
         if [[ -n $dir ]]; then
             printf "%s" "$dir"
