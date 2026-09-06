@@ -1,6 +1,11 @@
 # filorgk
 
 `filorgk` is a Bash command-line tool that automatically organizes files into structured folders based on file type and category. It is designed for directories such as `Downloads` and `Desktop`, where files can quickly become difficult to manage.
+## DEMO
+
+
+https://github.com/user-attachments/assets/b26f769a-0044-4371-a9d7-5860c021c4a4
+
 
 ## Features
 
