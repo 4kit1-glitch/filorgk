@@ -32,7 +32,7 @@ delete_empty_files() {
             }
         }
     done < "$found_files_store_path"
-        
+    return 0
 }
 
 delete_large_files() {

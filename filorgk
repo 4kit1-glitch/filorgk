@@ -38,6 +38,15 @@ done
 
 increment_run_count() {
     local run_count
+    [[ ! -d $LOGS_DIR ]] && {
+        create_dir "$LOGS_DIR" "$BACKUP_DIR" || {
+        echo "Failed to create logs or backup directory" >&2
+        error "Failed to create logs or backup directory"
+        exit 1
+    
+    }
+
+    }
     if [[ ! -f "$run_count_path" ]]; then
         echo 0 > "$run_count_path"
     fi
@@ -46,7 +55,7 @@ increment_run_count() {
     echo "$run_count" > "$run_count_path"
 }
 
-run_count=$(cat "$run_count_path")
+export run_count=$(cat "$run_count_path" 2> /dev/null || printf "0")
 export found_files_store_path="$LOGS_DIR/found_files_$run_count.log"
 
 main() {

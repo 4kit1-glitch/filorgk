@@ -4,6 +4,7 @@
 # execute function script
 
 reset_logs_and_runstate() {
+    printf "cleaning cache and logs\n"
     rm -rf "$LOGS_DIR"  || {
         echo "Failed to reset logs and run state" >&2
         error "Failed to reset logs and run state"
@@ -14,15 +15,18 @@ reset_logs_and_runstate() {
         error "Failed to reset logs and run state"
         exit 1
     }
+    printf "reset complete\n"
+
     exit 0
 }
 
 run_precaution() {
     read -r answer
-    [[ "$answer" != "[Yy]" ]] && {
+    [[ "$answer" != "Y" ]] && {
         echo "Operation cancelled by user" >&2
         exit 1
     }
+    return 0
 }
 execute_sub_option() {
     local sub_option="$1"
