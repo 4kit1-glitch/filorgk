@@ -59,7 +59,7 @@ export run_count=$(cat "$run_count_path" 2> /dev/null || printf "0")
 export found_files_store_path="$LOGS_DIR/found_files_$run_count.log"
 
 main() {
-
+    local option
     parse_flags "$@" || {
         echo "Failed to parse flags" >&2
         error "Failed to parse flags"

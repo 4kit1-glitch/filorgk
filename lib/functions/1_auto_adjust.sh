@@ -14,9 +14,9 @@ auto_arrange_by_extension() {
         printf "Creating directory %s\n" "$SCRIPT_DIR/$destination"
         inform "Creating directory $SCRIPT_DIR/$destination"
 
-        create_dir "$SCRIPT_DIR/$destination" || {
-            echo "Failed to create directory $SCRIPT_DIR/$destination" >&2
-            error "Failed to create directory $SCRIPT_DIR/$destination"
+        create_dir "$HOME/$destination" || {
+            echo "Failed to create directory $HOME/$destination" >&2
+            error "Failed to create directory $HOME/$destination"
             exit 1
         }
     }

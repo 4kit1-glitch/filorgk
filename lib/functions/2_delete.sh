@@ -13,7 +13,7 @@ delete_file() {
         echo "Failed to remove file.. force remove[Y/n]: "
         imform "Execution force option on $file"
         read -r response
-        [[ $response == "[Y][y]" ]] && {
+        [[ $response == "[Yy]" ]] && {
             rm -rf "$file"
             inform "Force remove $file"
         }
