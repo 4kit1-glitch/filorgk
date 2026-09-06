@@ -12,7 +12,7 @@ readonly PROG_NAME=$(basename "$0")
 
 
 export DATE="$(date +%Y_%m_%d)"
-export SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)
+export SCRIPT_DIR=$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)
 
 export LOGS_DIR=${LOGS_DIR:-"$HOME/.local/state/$PROG_NAME/logs"}
 export BACKUP_DIR=${BACKUP_DIR:-"$HOME/.local/share/$PROG_NAME/backup"}
