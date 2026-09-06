@@ -54,9 +54,6 @@ find_files() {
         info "No file found in $directory"
         exit 0
     }
-
-    printf "\n************************************************\n\n"
-
     for file in "${files[@]}"; do
         printf "%s\n" "$file" >> "$found_files_store_path" || {
             printf "Failed to write to found files store path" >&2
@@ -64,7 +61,6 @@ find_files() {
             exit 1
         }
     done
-    printf "\n************************************************\n\n"
 
 }
 display_found_files() {
