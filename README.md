@@ -100,5 +100,5 @@ filorgk/
 Kengah Ireneaus
 GitHub: [4kit1-glitch](https://github.com/4kit1-glitch)
 
-## License
-None
+## Why
+I usually accumulate files in one folder especially downloads
