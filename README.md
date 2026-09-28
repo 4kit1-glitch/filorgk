@@ -16,6 +16,8 @@ https://github.com/user-attachments/assets/b26f769a-0044-4371-a9d7-5860c021c4a4
 	- `-h`, `--help`: Display usage information.
 	- `-v`, `--version`: Display the installed version.
 	- `-r`, `--reset`: Delete filorgk logs and reset the stored run state.
+	- `-i`, `--info`: Print the latest info log (`info_*.log`).
+	- `-e`, `--error`: Print the latest error log (`err_*.log`).
 - Creates logs and backups under the user's local data and state directories.
 
 ## Installation
@@ -49,7 +51,7 @@ Run the command without options to start the interactive organizer:
 filorgk
 ```
 
-Display help, version information, or reset the logs and run state:
+Display help, version information, reset the logs and run state, or view the latest recorded logs:
 
 ```bash
 filorgk -h
@@ -60,7 +62,15 @@ filorgk --version
 
 filorgk -r
 filorgk --reset
+
+filorgk -i
+filorgk --info
+
+filorgk -e
+filorgk --error
 ```
+
+The log-view flags read the current runtime log files named in the form `info_*.log` and `err_*.log`, and they fall back to the newest matching file in the active log directory when needed.
 
 Core organizing command syntax:
 

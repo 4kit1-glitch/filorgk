@@ -21,12 +21,17 @@ reset_logs_and_runstate() {
 }
 
 run_precaution() {
+    local answer
     read -r answer
-    [[ "$answer" != "Y" ]] && {
-        echo "Operation cancelled by user" >&2
-        exit 1
-    }
-    return 0
+    case "$answer" in
+        [Yy])
+            return 0
+            ;;
+        *)
+            echo "Operation cancelled by user" >&2
+            return 1
+            ;;
+    esac
 }
 execute_sub_option() {
     local sub_option="$1"
