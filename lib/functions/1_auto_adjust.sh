@@ -10,22 +10,13 @@ auto_arrange_by_extension() {
 
     printf "Enter the destination directory: "
     read -r destination
-    [[ ! -d "$destination" && ! -w "$destination" ]] && {
-        printf "Creating directory %s\n" "$SCRIPT_DIR/$destination"
-        inform "Creating directory $SCRIPT_DIR/$destination"
+    destination="$(prepare_destination_path "$destination")" || return 1
 
-        create_dir "$HOME/$destination" || {
-            echo "Failed to create directory $HOME/$destination" >&2
-            error "Failed to create directory $HOME/$destination"
-            exit 1
-        }
-    }
-    
-    while IFS= read -r file; do 
+    while IFS= read -r file; do
+        [[ -f "$file" ]] || continue
         extension="$(get_extension "$file")"
         printf "File: %s, Extension: %s\n" "$file" "$extension"
-        [[ $extension != "" ]] && {
-            create_dir "$destination/$extension"
+        [[ -n "$extension" && "$extension" != "none" ]] && {
             move_file "$file" "$destination/$extension"
         }
     done < "$found_files_store_path"
@@ -39,15 +30,12 @@ auto_arrange_by_size() {
 
     printf "Enter the destination directory: "
     read -r destination
-    [[ ! -d "$destination" && ! -w "$destination" ]] && {
-        create_dir "$SCRIPT_DIR/$destination"
-        destination="$SCRIPT_DIR/$destination"
-    }
-    
-    while IFS= read -r file; do 
+    destination="$(prepare_destination_path "$destination")" || return 1
+
+    while IFS= read -r file; do
+        [[ -f "$file" ]] || continue
         size="$(get_size "$file")"
-        [[ $size != "" ]] && {
-            create_dir "$destination/$size"
+        [[ -n "$size" ]] && {
             move_file "$file" "$destination/$size"
         }
     done < "$found_files_store_path"
@@ -61,16 +49,15 @@ auto_arrange_by_mtime() {
 
     printf "Enter the destination directory: "
     read -r destination
-    [[ ! -d "$destination" && ! -w "$destination" ]] && {
-        create_dir "$SCRIPT_DIR/$destination"
-        destination="$SCRIPT_DIR/$destination"
-    }
-    
-    while IFS= read -r file; do 
+    destination="$(prepare_destination_path "$destination")" || return 1
+
+    while IFS= read -r file; do
+        [[ -f "$file" ]] || continue
         mtime="$(get_mtime "$file")"
-        [[ $mtime != "" ]] && {
-            create_dir "$destination/$mtime"
-            move_file "$file" "$destination/$mtime"
+        [[ -n "$mtime" ]] && {
+            local safe_mtime
+            safe_mtime="${mtime//:/-}"
+            move_file "$file" "$destination/$safe_mtime"
         }
     done < "$found_files_store_path"
 }
